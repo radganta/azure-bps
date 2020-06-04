@@ -76,19 +76,19 @@
 			"type": "String"
 		},
         "OptionalVMPrefix": {
-			"defaultValue": "armdupre",
+			"defaultValue": "Ixia",
 			"type": "String"
 		},
 		"UserEmailTag": {
-			"defaultValue": "a-joseph.dupre@keysight.com",
+			"defaultValue": "Optional-Email-Tag",
 			"type": "String"
 		},
 		"UserProjectTag": {
-			"defaultValue": "INSIGHT_2020",
+			"defaultValue": "Optional-Project-Tag",
 			"type": "String"
 		},
 		"UserOptionsTag": {
-			"defaultValue": "MANUAL",
+			"defaultValue": "Optional-Options-Tag",
 			"type": "String"
 		}
 	},

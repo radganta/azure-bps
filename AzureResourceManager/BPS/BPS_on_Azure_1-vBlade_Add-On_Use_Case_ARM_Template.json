@@ -7,23 +7,23 @@
 			"type": "String"
 		},
 		"VnetName": {
-			"defaultValue": "armdupre_BPS_AZURE_VNET",
+			"defaultValue": "Ixia_BPS_AZURE_VNET",
 			"type": "String"
 		},
         "MgmtSubnetName": {
-			"defaultValue": "armdupre_BPS_AZURE_VNET_MGMT_SUBNET",
+			"defaultValue": "Ixia_BPS_AZURE_VNET_MGMT_SUBNET",
 			"type": "String"
 		},
         "CtrlSubnetName": {
-			"defaultValue": "armdupre_BPS_AZURE_VNET_CTRL_SUBNET",
+			"defaultValue": "Ixia_BPS_AZURE_VNET_CTRL_SUBNET",
 			"type": "String"
 		},
         "Test1SubnetName": {
-			"defaultValue": "armdupre_BPS_AZURE_VNET_TEST1_SUBNET",
+			"defaultValue": "Ixia_BPS_AZURE_VNET_TEST1_SUBNET",
 			"type": "String"
 		},
         "Test2SubnetName": {
-			"defaultValue": "armdupre_BPS_AZURE_VNET_TEST2_SUBNET",
+			"defaultValue": "Ixia_BPS_AZURE_VNET_TEST2_SUBNET",
 			"type": "String"
 		},
         "MgmtSecurityRuleSourceIpPrefix": {
@@ -76,19 +76,19 @@
 			"type": "String"
 		},
         "OptionalVMPrefix": {
-			"defaultValue": "armdupre",
+			"defaultValue": "Ixia",
 			"type": "String"
 		},
 		"UserEmailTag": {
-			"defaultValue": "a-joseph.dupre@keysight.com",
+			"defaultValue": "Optional-Email-Tag",
 			"type": "String"
 		},
 		"UserProjectTag": {
-			"defaultValue": "INSIGHT_2020",
+			"defaultValue": "Optional-Project-Tag",
 			"type": "String"
 		},
 		"UserOptionsTag": {
-			"defaultValue": "MANUAL",
+			"defaultValue": "Optional-Options-Tag",
 			"type": "String"
 		}
 	},
