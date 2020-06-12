@@ -72,7 +72,7 @@
 			]
 		},
         "DiagnosticsStorageAccountName": {
-			"defaultValue": "bootdiagnostics2020",
+			"defaultValue": "ixiadiagnostics",
 			"type": "String"
 		},
         "OptionalVMPrefix": {
