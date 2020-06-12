@@ -368,107 +368,8 @@
                 ]
             },
             "dependsOn": []
-        }, 
-        
-        {
-            "type": "Microsoft.Network/networkInterfaces",
-            "name": "[variables('BpsSystemControllerEth0Name')]",
-            "apiVersion": "[variables('apiVersion')]",
-            "location": "[resourceGroup().location]",
-            "scale": null,
-			"tags": {
-				"Owner": "[variables('UserEmailTag')]",
-			    "Project": "[variables('UserProjectTag')]",
-			    "Options": "[variables('UserOptionsTag')]",
-				"ResourceGroup": "[resourceGroup().name]",
-				"Location": "[resourceGroup().location]"
-			},
-            "properties": {
-                "ipConfigurations": [
-                    {
-                        "name": "ipconfig1",
-                        "properties": {
-                            "privateIPAllocationMethod": "Dynamic",
-                            "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('MgmtPublicIpAddressName'))]"
-                            },
-                            "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('VnetName'), variables('MgmtSubnetName'))]"
-                            },
-                            "primary": true,
-                            "privateIPAddressVersion": "IPv4"
-                        }
-                    }
-                ],
-                "dnsSettings": {
-                    "dnsServers": [],
-                    "appliedDnsServers": []
-                },
-                "enableAcceleratedNetworking": "[variables('BpsSystemControllerEnableAcceleratedNetworking')]",
-                "enableIPForwarding": "[variables('BpsSystemControllerEnableIPForwarding')]",
-                "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('MgmtNetworkSecurityGroupName'))]"
-                },
-                "primary": true,
-                "virtualMachine": {
-                    "id": "[resourceId('Microsoft.Compute/virtualMachines', variables('BpsSystemControllerName'))]"
-                }
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('VnetName'), variables('MgmtSubnetName'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', variables('MgmtNetworkSecurityGroupName'))]",
-                "[resourceId('Microsoft.Network/publicIPAddresses', variables('MgmtPublicIpAddressName'))]"
-            ]
         },
 
-        {
-            "type": "Microsoft.Network/networkInterfaces",
-            "name": "[variables('BpsSystemControllerEth1Name')]",
-            "apiVersion": "[variables('apiVersion')]",
-            "location": "[resourceGroup().location]",
-            "scale": null,
-			"tags": {
-				"Owner": "[variables('UserEmailTag')]",
-			    "Project": "[variables('UserProjectTag')]",
-			    "Options": "[variables('UserOptionsTag')]",
-				"ResourceGroup": "[resourceGroup().name]",
-				"Location": "[resourceGroup().location]"
-			},
-            "properties": {
-                "ipConfigurations": [
-                    {
-                        "name": "ipconfig1",
-                        "properties": {
-                            "privateIPAddress": "[variables('BpsSystemControllerEth1IpAddress')]",
-                            "privateIPAllocationMethod": "Static",
-                            "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('VnetName'), variables('CtrlSubnetName'))]"
-                            },
-                            "primary": true,
-                            "privateIPAddressVersion": "IPv4"
-                        }
-                    }
-                ],
-                "dnsSettings": {
-                    "dnsServers": [],
-                    "appliedDnsServers": []
-                },
-                "enableAcceleratedNetworking": "[variables('BpsSystemControllerEnableAcceleratedNetworking')]",
-                "enableIPForwarding": "[variables('BpsSystemControllerEnableIPForwarding')]",
-                "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('MgmtNetworkSecurityGroupName'))]"
-                },
-                "primary": true,
-                "virtualMachine": {
-                    "id": "[resourceId('Microsoft.Compute/virtualMachines', variables('BpsSystemControllerName'))]"
-                }
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('VnetName'), variables('CtrlSubnetName'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', variables('MgmtNetworkSecurityGroupName'))]"
-            ]
-        },
-                   
         {
             "type": "Microsoft.Network/networkInterfaces",
             "name": "[variables('BpsVirtualBlade1Eth0Name')]",
@@ -518,7 +419,7 @@
             ]
         },      
  
-       {
+        {
             "type": "Microsoft.Network/networkInterfaces",
             "name": "[variables('BpsVirtualBlade1Eth1Name')]",
             "apiVersion": "[variables('apiVersion')]",
@@ -826,31 +727,6 @@
 
         {
             "type": "Microsoft.Network/publicIPAddresses",
-            "name": "[variables('MgmtPublicIpAddressName')]",
-            "apiVersion": "[variables('apiVersion')]",
-            "location": "[resourceGroup().location]",
-            "scale": null,
-			"tags": {
-				"Owner": "[variables('UserEmailTag')]",
-			    "Project": "[variables('UserProjectTag')]",
-			    "Options": "[variables('UserOptionsTag')]",
-				"ResourceGroup": "[resourceGroup().name]",
-				"Location": "[resourceGroup().location]"
-			},
-            "properties": {
-                "publicIPAddressVersion": "IPv4",
-                "publicIPAllocationMethod": "Static",
-                "idleTimeoutInMinutes": 4,
-                "dnsSettings": {
-                    "domainNameLabel": "[variables('BpsSystemControllerDnsLabel')]",
-                    "fqdn": "[concat(variables('BpsSystemControllerDnsLabel'),'.', resourceGroup().location,'.cloudapp.azure.com')]"
-                }
-            },
-            "dependsOn": []
-        },
-
-        {
-            "type": "Microsoft.Network/publicIPAddresses",
             "name": "[variables('BpsVirtualBlade1Eth0PublicIpAddressName')]",
             "apiVersion": "[variables('apiVersion')]",
             "location": "[resourceGroup().location]",
@@ -872,82 +748,6 @@
                 }
             },
             "dependsOn": []
-        },
-
-        {
-            "type": "Microsoft.Compute/virtualMachines",
-            "name": "[variables('BpsSystemControllerName')]",
-            "apiVersion": "[variables('apiVersion')]",
-            "location": "[resourceGroup().location]",
-            "scale": null,
-			"tags": {
-				"Owner": "[variables('UserEmailTag')]",
-			    "Project": "[variables('UserProjectTag')]",
-			    "Options": "[variables('UserOptionsTag')]",
-				"ResourceGroup": "[resourceGroup().name]",
-				"Location": "[resourceGroup().location]"
-			},
-            "properties": {
-                "hardwareProfile": {
-                    "vmSize": "[variables('BpsSystemControllerVmSize')]"
-                },
-                "storageProfile": {
-                    "imageReference": {
-                        "id": "[variables('BpsSystemControllerImageId')]"
-                    },
-                    "osDisk": {
-                        "osType": "Linux",
-                        "name": "[concat('disk_', variables('BpsSystemControllerName'))]",
-                        "createOption": "[variables('BpsSystemControllerCreateOption')]",
-                        "caching": "ReadWrite",
-                        "diskSizeGB": "[variables('BpsSystemControllerDiskSizeGB')]"
-                    },
-                    "dataDisks": []
-                },
-				"osProfile": {
-					"computerName": "[variables('BpsSystemControllerName')]",
-					"adminUsername": "[variables('AdminUserName')]",
-					"adminPassword": "[variables('AdminPassword')]",
-					"linuxConfiguration": {
-						"disablePasswordAuthentication": "[variables('BpsSystemControllerDisablePasswordAuthentication')]",
-						"provisionVMAgent": "[variables('BpsSystemControllerProvisionVMAgent')]",
-						"ssh": {
-						  "publicKeys": [
-							{
-							  "path": "[variables('SshKeyPath')]",
-							  "keyData": "[variables('SshPublicKeyData')]"
-							}
-						  ]
-						}
-					}
-                },
-                "networkProfile": {
-                    "networkInterfaces": [
-                        {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('BpsSystemControllerEth0Name'))]",
-                            "properties": {
-                                "primary": true
-                            }
-                        },
-                        {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('BpsSystemControllerEth1Name'))]",
-                            "properties": {
-                                "primary": false
-                            }
-                        }
-                    ]
-                },
-                "diagnosticsProfile": {
-                    "bootDiagnostics": {
-                        "enabled": "[variables('BpsSystemControllerBootDiagnosticsEnabled')]",
-                        "storageUri": "[concat('https', '://', variables('DiagnosticsStorageAccountName'), '.blob.core.windows.net', '/')]"
-                    }
-                }
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', variables('BpsSystemControllerEth0Name'))]",
-                "[resourceId('Microsoft.Network/networkInterfaces', variables('BpsSystemControllerEth1Name'))]"                
-            ]
         },
 
         {
