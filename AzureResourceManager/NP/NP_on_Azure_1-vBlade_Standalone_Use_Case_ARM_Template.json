@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
 		"IxiaImagesResourceGroupName": {
-			"defaultValue": "ARMDUPRE-CUSTOM-IMAGES-2020",
+			"defaultValue": "Ixia_Images_RG",
 			"type": "String"
 		},
 		"VnetAddressPrefix": {
