@@ -30,22 +30,6 @@
 			"defaultValue": "42.42.42.42/32",
 			"type": "String"
 		},
-		"BpsSystemControllerEth1IpAddress": {
-			"defaultValue": "10.0.1.10",
-			"type": "String"
-		},
-        "BpsSystemControllerImageName": {
-			"defaultValue": "Ixia_BreakingPoint_Virtual_Controller_9.00.108",
-			"type": "String"
-		},
-        "BpsSystemControllerVmSize": {
-			"defaultValue": "Standard_F4s",
-			"type": "String",
-			"allowedValues": [
-				"Standard_F4s",
-				"Standard_F4s_v2"
-			]
-		},
 		"BpsVirtualBlade1Eth0IpAddress": { 
 			"defaultValue": "10.0.1.11",
 			"type": "String"
@@ -118,24 +102,12 @@
         "MgmtHttpSecurityRuleName": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_WEB_RULE')]",
         "MgmtHttpsSecurityRuleName": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_HTTPS_RULE')]",
         "MgmtSecurityRuleSourceIpPrefix": "[parameters('MgmtSecurityRuleSourceIpPrefix')]",
-        "BpsSystemControllerEth0Name": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_SYSTEM_CONTROLLER_ETH0')]",
-        "BpsSystemControllerEth1Name": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_SYSTEM_CONTROLLER_ETH1')]",
         "BpsVirtualBlade1Eth0Name": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_VIRTUAL_BLADE1_ETH0')]",
         "BpsVirtualBlade1Eth1Name": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_VIRTUAL_BLADE1_ETH1')]",
         "BpsVirtualBlade1Eth2Name": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_VIRTUAL_BLADE1_ETH2')]",
-		"BpsSystemControllerEth1IpAddress": "[parameters('BpsSystemControllerEth1IpAddress')]",
 		"BpsVirtualBlade1Eth0IpAddress": "[parameters('BpsVirtualBlade1Eth0IpAddress')]",
 		"BpsVirtualBlade1Eth1IpAddresses": "[parameters('BpsVirtualBlade1Eth1IpAddresses')]",
 		"BpsVirtualBlade1Eth2IpAddresses": "[parameters('BpsVirtualBlade1Eth2IpAddresses')]",
-        "BpsSystemControllerName": "[concat(variables('OptionalVMPrefix'), '-', 'BPS-AZURE-SYSTEM-CONTROLLER')]",
-		"BpsSystemControllerDnsLabel": "[concat(toLower(replace(resourceGroup().name, '_', '-')), '-', 'bps-sys-ctrl', '-', substring(uniqueString(resourceGroup().id),0,6))]",
-        "BpsSystemControllerEnableAcceleratedNetworking": false,
-        "BpsSystemControllerEnableIPForwarding": false,
-		"BpsSystemControllerDisablePasswordAuthentication": false,
-		"BpsSystemControllerProvisionVMAgent": false,
-		"BpsSystemControllerBootDiagnosticsEnabled": true,
-        "BpsSystemControllerVmSize": "[parameters('BpsSystemControllerVmSize')]",
-		"BpsSystemControllerDiskSizeGB": "20",
         "BpsVirtualBlade1Name": "[concat(variables('OptionalVMPrefix'), '-', 'BPS-AZURE-VIRTUAL-BLADE1')]",
 		"BpsVirtualBlade1DnsLabel": "[concat(toLower(replace(resourceGroup().name, '_', '-')), '-', 'bps-vblade-1', '-', substring(uniqueString(resourceGroup().id),0,6))]",
         "BpsVirtualBladeEnableAcceleratedNetworking": true,
@@ -147,15 +119,12 @@
 		"BpsVirtualBladeDiskSizeGB": "14",
         "MgmtPublicIpAddressName": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_MGMT_PUBLIC_IP')]",
         "BpsVirtualBlade1Eth0PublicIpAddressName": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_BPS_VIRTUAL_BLADE1_ETH0_PUBLIC_IP')]",
-        "BpsSystemControllerImageName": "[parameters('BpsSystemControllerImageName')]",
-		"BpsSystemControllerCreateOption": "FromImage",
-		"BpsSystemControllerImageId": "[concat('/subscriptions/', variables('SubscriptionId'), '/resourceGroups/', variables('IxiaImagesResourceGroupName'), '/providers/Microsoft.Compute/images/', variables('BpsSystemControllerImageName'))]",
         "BpsVirtualBladeImageName": "[parameters('BpsVirtualBladeImageName')]",
 		"BpsVirtualBladeImageId": "[concat('/subscriptions/', variables('SubscriptionId'), '/resourceGroups/', variables('IxiaImagesResourceGroupName'), '/providers/Microsoft.Compute/images/', variables('BpsVirtualBladeImageName'))]",		
 		"BpsVirtualBladeCreateOption": "FromImage",		
 		"AdminUserName": "bpcloud",
 		"AdminPassword": "Ixia1234!",
-		"SshPublicKeyData": "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAgvs7icNlu6snf0vWmO+9LbVsnngxt/G8yrYSZI8nkaOzQpTMDXmG4Tk5y4VVhG9K8SCLv1/TMFcMFxVPjGCpjQH/3tcjDiT8udMMNTbjQGIF/HsKSYhnzZ3hYEc3ciZLQNpzsHEKktLfgWggYlLsnH/k1ltzOzzm4MqYOw3gV3em3x2ReLdRL9/5zez8/h+ADHsiiiHq6TW99vn7gDhRioybPLsMBdgdi6EpJpmDSotNzddDYaxsfSjhj2+FIbPxcrf4zNudnpYbNqt4n1qGB5gMVMdmc+r64ZPzVcK4OcIzuspwYQ64a0tww73ZmGE2gPGnhuAhW2JWyLReXbAl1Q== rsa-key-20190515",
+		"SshPublicKeyData": "ssh-rsa",
 		"SshKeyPath": "[concat('/home/',variables('AdminUserName'),'/.ssh/authorized_keys')]"
 	},
     "resources": [

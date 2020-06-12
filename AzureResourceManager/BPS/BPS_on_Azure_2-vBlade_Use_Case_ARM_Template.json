@@ -128,7 +128,7 @@
 		"BpsVirtualBladeCreateOption": "FromImage",		
 		"AdminUserName": "bpcloud",
 		"AdminPassword": "Ixia1234!",
-		"SshPublicKeyData": "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAgvs7icNlu6snf0vWmO+9LbVsnngxt/G8yrYSZI8nkaOzQpTMDXmG4Tk5y4VVhG9K8SCLv1/TMFcMFxVPjGCpjQH/3tcjDiT8udMMNTbjQGIF/HsKSYhnzZ3hYEc3ciZLQNpzsHEKktLfgWggYlLsnH/k1ltzOzzm4MqYOw3gV3em3x2ReLdRL9/5zez8/h+ADHsiiiHq6TW99vn7gDhRioybPLsMBdgdi6EpJpmDSotNzddDYaxsfSjhj2+FIbPxcrf4zNudnpYbNqt4n1qGB5gMVMdmc+r64ZPzVcK4OcIzuspwYQ64a0tww73ZmGE2gPGnhuAhW2JWyLReXbAl1Q== rsa-key-20190515",
+		"SshPublicKeyData": "ssh-rsa",
 		"SshKeyPath": "[concat('/home/',variables('AdminUserName'),'/.ssh/authorized_keys')]"
 	},
     "resources": [
