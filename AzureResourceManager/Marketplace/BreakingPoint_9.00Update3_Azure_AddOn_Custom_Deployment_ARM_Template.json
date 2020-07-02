@@ -27,7 +27,7 @@
 			"type": "String"
 		},
         "MgmtSecurityRuleSourceIpPrefix": {
-			"defaultValue": "204.9.57.138/32",
+			"defaultValue": "42.42.42.42/32",
 			"type": "String"
 		},
 		"BpsSystemControllerEth1IpAddress": {
