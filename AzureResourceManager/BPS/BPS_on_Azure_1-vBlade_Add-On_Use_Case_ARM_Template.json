@@ -14,10 +14,6 @@
 			"defaultValue": "Ixia_BPS_AZURE_VNET_MGMT_SUBNET",
 			"type": "String"
 		},
-        "CtrlSubnetName": {
-			"defaultValue": "Ixia_BPS_AZURE_VNET_CTRL_SUBNET",
-			"type": "String"
-		},
         "Test1SubnetName": {
 			"defaultValue": "Ixia_BPS_AZURE_VNET_TEST1_SUBNET",
 			"type": "String"
@@ -28,10 +24,6 @@
 		},
         "MgmtSecurityRuleSourceIpPrefix": {
 			"defaultValue": "42.42.42.42/32",
-			"type": "String"
-		},
-		"BpsSystemControllerEth1IpAddress": {
-			"defaultValue": "10.0.1.12",
 			"type": "String"
 		},
         "BpsSystemControllerImageName": {
@@ -47,7 +39,7 @@
 			]
 		},
 		"BpsVirtualBlade1Eth0IpAddress": { 
-			"defaultValue": "10.0.1.13",
+			"defaultValue": "10.0.10.13",
 			"type": "String"
 		},
 		"BpsVirtualBlade1Eth1IpAddresses": {
@@ -104,8 +96,6 @@
         "VnetName": "[parameters('VnetName')]",
         "MgmtSubnetName": "[parameters('MgmtSubnetName')]",
 		"MgmtSubnetRef": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', variables('VnetName'),  variables('MgmtSubnetName'))]",
-        "CtrlSubnetName": "[parameters('CtrlSubnetName')]",
-        "CtrlSubnetRef": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', variables('VnetName'),  variables('CtrlSubnetName'))]",
         "Test1SubnetName": "[parameters('Test1SubnetName')]",
         "Test1SubnetRef": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', variables('VnetName'),  variables('Test1SubnetName'))]",
         "Test2SubnetName": "[parameters('Test2SubnetName')]",
@@ -118,11 +108,9 @@
         "MgmtHttpsSecurityRuleName": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_HTTPS_RULE')]",
         "MgmtSecurityRuleSourceIpPrefix": "[parameters('MgmtSecurityRuleSourceIpPrefix')]",
         "BpsSystemControllerEth0Name": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_SYSTEM_CONTROLLER_ETH0')]",
-        "BpsSystemControllerEth1Name": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_SYSTEM_CONTROLLER_ETH1')]",
         "BpsVirtualBlade1Eth0Name": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_VIRTUAL_BLADE1_ETH0')]",
         "BpsVirtualBlade1Eth1Name": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_VIRTUAL_BLADE1_ETH1')]",
         "BpsVirtualBlade1Eth2Name": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_VIRTUAL_BLADE1_ETH2')]",
-		"BpsSystemControllerEth1IpAddress": "[parameters('BpsSystemControllerEth1IpAddress')]",
 		"BpsVirtualBlade1Eth0IpAddress": "[parameters('BpsVirtualBlade1Eth0IpAddress')]",
 		"BpsVirtualBlade1Eth1IpAddresses": "[parameters('BpsVirtualBlade1Eth1IpAddresses')]",
 		"BpsVirtualBlade1Eth2IpAddresses": "[parameters('BpsVirtualBlade1Eth2IpAddresses')]",
@@ -347,53 +335,6 @@
                 "[resourceId('Microsoft.Network/publicIPAddresses', variables('MgmtPublicIpAddressName'))]"
             ]
         },
-
-        {
-            "type": "Microsoft.Network/networkInterfaces",
-            "name": "[variables('BpsSystemControllerEth1Name')]",
-            "apiVersion": "[variables('apiVersion')]",
-            "location": "[resourceGroup().location]",
-            "scale": null,
-			"tags": {
-				"Owner": "[variables('UserEmailTag')]",
-			    "Project": "[variables('UserProjectTag')]",
-			    "Options": "[variables('UserOptionsTag')]",
-				"ResourceGroup": "[resourceGroup().name]",
-				"Location": "[resourceGroup().location]"
-			},
-            "properties": {
-                "ipConfigurations": [
-                    {
-                        "name": "ipconfig1",
-                        "properties": {
-                            "privateIPAddress": "[variables('BpsSystemControllerEth1IpAddress')]",
-                            "privateIPAllocationMethod": "Static",
-                            "subnet": {
-                                "id": "[variables('CtrlSubnetRef')]"
-                            },
-                            "primary": true,
-                            "privateIPAddressVersion": "IPv4"
-                        }
-                    }
-                ],
-                "dnsSettings": {
-                    "dnsServers": [],
-                    "appliedDnsServers": []
-                },
-                "enableAcceleratedNetworking": "[variables('BpsSystemControllerEnableAcceleratedNetworking')]",
-                "enableIPForwarding": "[variables('BpsSystemControllerEnableIPForwarding')]",
-                "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('MgmtNetworkSecurityGroupName'))]"
-                },
-                "primary": true,
-                "virtualMachine": {
-                    "id": "[resourceId('Microsoft.Compute/virtualMachines', variables('BpsSystemControllerName'))]"
-                }
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/networkSecurityGroups', variables('MgmtNetworkSecurityGroupName'))]"
-            ]
-        },
                    
         {
             "type": "Microsoft.Network/networkInterfaces",
@@ -419,7 +360,7 @@
                                 "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('BpsVirtualBlade1Eth0PublicIpAddressName'))]"
                             },
                             "subnet": {
-                                "id": "[variables('CtrlSubnetRef')]"
+                                "id": "[variables('MgmtSubnetRef')]"
                             },
                             "primary": true,
                             "privateIPAddressVersion": "IPv4"
@@ -443,7 +384,7 @@
             ]
         },      
  
-       {
+        {
             "type": "Microsoft.Network/networkInterfaces",
             "name": "[variables('BpsVirtualBlade1Eth1Name')]",
             "apiVersion": "[variables('apiVersion')]",
@@ -851,12 +792,6 @@
                             "properties": {
                                 "primary": true
                             }
-                        },
-                        {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('BpsSystemControllerEth1Name'))]",
-                            "properties": {
-                                "primary": false
-                            }
                         }
                     ]
                 },
@@ -868,8 +803,7 @@
                 }
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', variables('BpsSystemControllerEth0Name'))]",
-                "[resourceId('Microsoft.Network/networkInterfaces', variables('BpsSystemControllerEth1Name'))]"                
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('BpsSystemControllerEth0Name'))]"
             ]
         },
 

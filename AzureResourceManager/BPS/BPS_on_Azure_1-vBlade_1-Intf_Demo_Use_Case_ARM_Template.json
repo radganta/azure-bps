@@ -442,7 +442,7 @@
             ]
         },      
  
-       {
+        {
             "type": "Microsoft.Network/networkInterfaces",
             "name": "[variables('BpsVirtualBlade1Eth1Name')]",
             "apiVersion": "[variables('apiVersion')]",
@@ -863,7 +863,7 @@
                 }
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', variables('BpsSystemControllerEth0Name'))]"               
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('BpsSystemControllerEth0Name'))]"
             ]
         },
 

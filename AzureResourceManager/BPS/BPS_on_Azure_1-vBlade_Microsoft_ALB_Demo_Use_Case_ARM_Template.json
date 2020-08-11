@@ -71,21 +71,17 @@
         "AgwSubnetPrefix": "10.0.9.0/24",
         "MgmtSubnetName": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_VNET_MGMT_SUBNET')]",
         "MgmtSubnetPrefix": "10.0.10.0/24",
-        "CtrlSubnetName": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_VNET_CTRL_SUBNET')]",
-        "CtrlSubnetPrefix": "10.0.11.0/24",
         "Test1SubnetName": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_VNET_TEST1_SUBNET')]",
         "Test1SubnetPrefix": "10.0.1.0/24",
         "Test2SubnetName": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_VNET_TEST2_SUBNET')]",
         "Test2SubnetPrefix": "10.0.2.0/24",
-        "MgmtNetworkSecurityGroupName": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_MGMT_NETWORK_SECURITY_GROUP')]",
-        "CtrlNetworkSecurityGroupName": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_CTRL_NETWORK_SECURITY_GROUP')]",  	
+        "MgmtNetworkSecurityGroupName": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_MGMT_NETWORK_SECURITY_GROUP')]",  	
         "Test1NetworkSecurityGroupName": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_TEST1_NETWORK_SECURITY_GROUP')]",  	
         "Test2NetworkSecurityGroupName": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_TEST2_NETWORK_SECURITY_GROUP')]",	
         "MgmtSshSecurityRuleName": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_MGMT_SSH_RULE')]",
         "MgmtHttpSecurityRuleName": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_MGMT_WEB_RULE')]",
         "MgmtHttpsSecurityRuleName": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_MGMT_HTTPS_RULE')]",
         "MgmtSecurityRuleSourceIpPrefix": "[parameters('MgmtSecurityRuleSourceIpPrefix')]",
-        "CtrlHttpSecurityRuleName": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_CTRL_WEB_RULE')]",
         "Test1HttpSecurityRuleName": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_TEST1_WEB_RULE')]",
 		"Test2HttpSecurityRuleName": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_TEST2_WEB_RULE')]",
         "BpsSystemControllerEth0Name": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_SYSTEM_CONTROLLER_ETH0')]",
@@ -174,12 +170,6 @@
                         }
                     },
                     {
-                        "name": "[variables('CtrlSubnetName')]",
-                        "properties": {
-                            "addressPrefix": "[variables('CtrlSubnetPrefix')]"
-                        }
-                    },
-                    {
                         "name": "[variables('Test1SubnetName')]",
                         "properties": {
                             "addressPrefix": "[variables('Test1SubnetPrefix')]"
@@ -217,19 +207,6 @@
             "scale": null,
             "properties": {
                 "addressPrefix": "[variables('MgmtSubnetPrefix')]"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', variables('VnetName'))]"
-            ]
-        },
-        
-        {
-            "type": "Microsoft.Network/virtualNetworks/subnets",
-            "name": "[concat(variables('VnetName'), '/', variables('CtrlSubnetName'))]",
-            "apiVersion": "[variables('apiVersion')]",
-            "scale": null,
-            "properties": {
-                "addressPrefix": "[variables('CtrlSubnetPrefix')]"
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Network/virtualNetworks', variables('VnetName'))]"
@@ -311,42 +288,6 @@
                     },
                     {
                         "name": "[variables('MgmtHttpSecurityRuleName')]",
-                        "properties": {
-                            "description": "Allow HTTP",
-                            "protocol": "Tcp",
-                            "sourcePortRange": "*",
-                            "destinationPortRange": "80",
-                            "sourceAddressPrefix": "[variables('MgmtSecurityRuleSourceIpPrefix')]",
-                            "destinationAddressPrefix": "*",
-                            "access": "Allow",
-                            "priority": 102,
-                            "direction": "Inbound",
-                            "sourceAddressPrefixes": [],
-                            "destinationAddressPrefixes": []
-                        }
-                    }
-                ]
-            },
-            "dependsOn": []
-        }, 
-
-        {
-            "type": "Microsoft.Network/networkSecurityGroups",
-            "name": "[variables('CtrlNetworkSecurityGroupName')]",
-            "apiVersion": "[variables('apiVersion')]",
-            "location": "[resourceGroup().location]",
-            "scale": null,
-			"tags": {
-				"Owner": "[variables('UserEmailTag')]",
-				"Project": "[variables('UserProjectTag')]",
-			    "Options": "[variables('UserOptionsTag')]",
-				"ResourceGroup": "[resourceGroup().name]",
-				"Location": "[resourceGroup().location]"
-			},
-            "properties": {
-                "securityRules": [
-                    {
-                        "name": "[variables('CtrlHttpSecurityRuleName')]",
                         "properties": {
                             "description": "Allow HTTP",
                             "protocol": "Tcp",
@@ -488,54 +429,6 @@
                 "[resourceId('Microsoft.Network/publicIPAddresses', variables('MgmtPublicIpAddressName'))]"
             ]
         },
-
-        {
-            "type": "Microsoft.Network/networkInterfaces",
-            "name": "[variables('BpsSystemControllerEth1Name')]",
-            "apiVersion": "[variables('apiVersion')]",
-            "location": "[resourceGroup().location]",
-            "scale": null,
-			"tags": {
-				"Owner": "[variables('UserEmailTag')]",
-			    "Project": "[variables('UserProjectTag')]",
-			    "Options": "[variables('UserOptionsTag')]",
-				"ResourceGroup": "[resourceGroup().name]",
-				"Location": "[resourceGroup().location]"
-			},
-            "properties": {
-                "ipConfigurations": [
-                    {
-                        "name": "ipconfig1",
-                        "properties": {
-                            "privateIPAddress": "[variables('BpsSystemControllerEth1IpAddress')]",
-                            "privateIPAllocationMethod": "Static",
-                            "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('VnetName'), variables('CtrlSubnetName'))]"
-                            },
-                            "primary": true,
-                            "privateIPAddressVersion": "IPv4"
-                        }
-                    }
-                ],
-                "dnsSettings": {
-                    "dnsServers": [],
-                    "appliedDnsServers": []
-                },
-                "enableAcceleratedNetworking": "[variables('BpsSystemControllerEnableAcceleratedNetworking')]",
-                "enableIPForwarding": "[variables('BpsSystemControllerEnableIPForwarding')]",
-                "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('CtrlNetworkSecurityGroupName'))]"
-                },
-                "primary": true,
-                "virtualMachine": {
-                    "id": "[resourceId('Microsoft.Compute/virtualMachines', variables('BpsSystemControllerName'))]"
-                }
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('VnetName'), variables('CtrlSubnetName'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', variables('CtrlNetworkSecurityGroupName'))]"
-            ]
-        },
                    
         {
             "type": "Microsoft.Network/networkInterfaces",
@@ -561,7 +454,7 @@
                                 "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('BpsVirtualBlade1Eth0PublicIpAddressName'))]"
                             },
                             "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('VnetName'), variables('CtrlSubnetName'))]"
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('VnetName'), variables('MgmtSubnetName'))]"
                             },
                             "primary": true,
                             "privateIPAddressVersion": "IPv4"
@@ -575,18 +468,18 @@
                 "enableAcceleratedNetworking": "[variables('BpsVirtualBladeEnableAcceleratedNetworking')]",
                 "enableIPForwarding": "[variables('BpsVirtualBladeEnableIPForwarding')]",
                 "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('CtrlNetworkSecurityGroupName'))]"
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('MgmtNetworkSecurityGroupName'))]"
                 },
                 "primary": true
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('VnetName'), variables('CtrlSubnetName'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', variables('CtrlNetworkSecurityGroupName'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('VnetName'), variables('MgmtSubnetName'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', variables('MgmtNetworkSecurityGroupName'))]",
                 "[resourceId('Microsoft.Network/publicIPAddresses', variables('BpsVirtualBlade1Eth0PublicIpAddressName'))]"
             ]
         },      
  
-       {
+        {
             "type": "Microsoft.Network/networkInterfaces",
             "name": "[variables('BpsVirtualBlade1Eth1Name')]",
             "apiVersion": "[variables('apiVersion')]",
