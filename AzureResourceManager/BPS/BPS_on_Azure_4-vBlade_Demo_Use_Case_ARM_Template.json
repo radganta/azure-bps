@@ -2135,15 +2135,7 @@
 					"adminPassword": "[variables('AdminPassword')]",
 					"linuxConfiguration": {
 						"disablePasswordAuthentication": "[variables('BpsVirtualBladeDisablePasswordAuthentication')]",
-						"provisionVMAgent": "[variables('BpsVirtualBladeProvisionVMAgent')]",
-						"ssh": {
-						  "publicKeys": [
-							{
-							  "path": "[variables('SshKeyPath')]",
-							  "keyData": "[variables('SshPublicKeyData')]"
-							}
-						  ]
-						}
+						"provisionVMAgent": "[variables('BpsVirtualBladeProvisionVMAgent')]"
 					}
 				},
                 "networkProfile": {
@@ -2218,15 +2210,7 @@
 					"adminPassword": "[variables('AdminPassword')]",
 					"linuxConfiguration": {
 						"disablePasswordAuthentication": "[variables('BpsVirtualBladeDisablePasswordAuthentication')]",
-						"provisionVMAgent": "[variables('BpsVirtualBladeProvisionVMAgent')]",
-						"ssh": {
-						  "publicKeys": [
-							{
-							  "path": "[variables('SshKeyPath')]",
-							  "keyData": "[variables('SshPublicKeyData')]"
-							}
-						  ]
-						}
+						"provisionVMAgent": "[variables('BpsVirtualBladeProvisionVMAgent')]"
 					}
 				},
                 "networkProfile": {
@@ -2301,15 +2285,7 @@
 					"adminPassword": "[variables('AdminPassword')]",
 					"linuxConfiguration": {
 						"disablePasswordAuthentication": "[variables('BpsVirtualBladeDisablePasswordAuthentication')]",
-						"provisionVMAgent": "[variables('BpsVirtualBladeProvisionVMAgent')]",
-						"ssh": {
-						  "publicKeys": [
-							{
-							  "path": "[variables('SshKeyPath')]",
-							  "keyData": "[variables('SshPublicKeyData')]"
-							}
-						  ]
-						}
+						"provisionVMAgent": "[variables('BpsVirtualBladeProvisionVMAgent')]"
 					}
 				},
                 "networkProfile": {
