@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
 		"IxiaImagesResourceGroupName": {
@@ -69,8 +69,6 @@
         "VnetAddressPrefix": "10.0.0.0/16",
 		"MgmtSubnetName": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_VNET_MGMT_SUBNET')]",
         "MgmtSubnetPrefix": "10.0.10.0/24",
-        "CtrlSubnetName": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_VNET_CTRL_SUBNET')]",
-        "CtrlSubnetPrefix": "10.0.1.0/24",
         "Test1SubnetName": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_VNET_TEST1_SUBNET')]",
         "Test1SubnetPrefix": "10.0.2.0/24",
         "MgmtNetworkSecurityGroupName": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_NETWORK_SECURITY_GROUP')]",
@@ -83,7 +81,7 @@
         "BpsVirtualBlade1Eth0Name": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_VIRTUAL_BLADE1_ETH0')]",
         "BpsVirtualBlade1Eth1Name": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_VIRTUAL_BLADE1_ETH1')]",
         "BpsVirtualBlade1Eth2Name": "[concat(variables('OptionalVMPrefix'), '_', 'BPS_AZURE_VIRTUAL_BLADE1_ETH2')]",
-		"BpsVirtualBlade1Eth0IpAddress": "10.0.1.11",
+		"BpsVirtualBlade1Eth0IpAddress": "10.0.10.11",
 		"BpsVirtualBlade1Eth1IpAddresses": ["10.0.2.12", "10.0.2.13", "10.0.2.14", "10.0.2.15", "10.0.2.16", "10.0.2.17", "10.0.2.18", "10.0.2.19", "10.0.2.20", "10.0.2.21", "10.0.2.22", "10.0.2.23", "10.0.2.24", "10.0.2.25", "10.0.2.26"],
 		"BpsVirtualBlade1Eth2IpAddresses": ["10.0.2.32", "10.0.2.33", "10.0.2.34", "10.0.2.35", "10.0.2.36", "10.0.2.37", "10.0.2.38", "10.0.2.39", "10.0.2.40", "10.0.2.41", "10.0.2.42", "10.0.2.43", "10.0.2.44", "10.0.2.45", "10.0.2.46"],
         "BpsSystemControllerName": "[concat(variables('OptionalVMPrefix'), '-', 'BPS-AZURE-SYSTEM-CONTROLLER')]",
@@ -143,12 +141,6 @@
                         }
                     },
                     {
-                        "name": "[variables('CtrlSubnetName')]",
-                        "properties": {
-                            "addressPrefix": "[variables('CtrlSubnetPrefix')]"
-                        }
-                    },
-                    {
                         "name": "[variables('Test1SubnetName')]",
                         "properties": {
                             "addressPrefix": "[variables('Test1SubnetPrefix')]"
@@ -172,20 +164,7 @@
                 "[resourceId('Microsoft.Network/virtualNetworks', variables('VnetName'))]"
             ]
         },
-        
-        {
-            "type": "Microsoft.Network/virtualNetworks/subnets",
-            "name": "[concat(variables('VnetName'), '/', variables('CtrlSubnetName'))]",
-            "apiVersion": "[variables('apiVersion')]",
-            "scale": null,
-            "properties": {
-                "addressPrefix": "[variables('CtrlSubnetPrefix')]"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', variables('VnetName'))]"
-            ]
-        },
-        
+
         {
             "type": "Microsoft.Network/virtualNetworks/subnets",
             "name": "[concat(variables('VnetName'), '/', variables('Test1SubnetName'))]",
@@ -378,7 +357,7 @@
                                 "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('BpsVirtualBlade1Eth0PublicIpAddressName'))]"
                             },
                             "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('VnetName'), variables('CtrlSubnetName'))]"
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('VnetName'), variables('MgmtSubnetName'))]"
                             },
                             "primary": true,
                             "privateIPAddressVersion": "IPv4"
@@ -397,13 +376,13 @@
                 "primary": true
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('VnetName'), variables('CtrlSubnetName'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('VnetName'), variables('MgmtSubnetName'))]",
                 "[resourceId('Microsoft.Network/networkSecurityGroups', variables('MgmtNetworkSecurityGroupName'))]",
                 "[resourceId('Microsoft.Network/publicIPAddresses', variables('BpsVirtualBlade1Eth0PublicIpAddressName'))]"
             ]
         },      
  
-       {
+        {
             "type": "Microsoft.Network/networkInterfaces",
             "name": "[variables('BpsVirtualBlade1Eth1Name')]",
             "apiVersion": "[variables('apiVersion')]",

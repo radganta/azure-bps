@@ -212,7 +212,7 @@
                 "[resourceId('Microsoft.Network/virtualNetworks', variables('VnetName'))]"
             ]
         },
-        
+
         {
             "type": "Microsoft.Network/virtualNetworks/subnets",
             "name": "[concat(variables('VnetName'), '/', variables('Test1SubnetName'))]",
@@ -429,7 +429,7 @@
                 "[resourceId('Microsoft.Network/publicIPAddresses', variables('MgmtPublicIpAddressName'))]"
             ]
         },
-                   
+
         {
             "type": "Microsoft.Network/networkInterfaces",
             "name": "[variables('BpsVirtualBlade1Eth0Name')]",
@@ -996,8 +996,7 @@
                 }
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', variables('BpsSystemControllerEth0Name'))]",
-                "[resourceId('Microsoft.Network/networkInterfaces', variables('BpsSystemControllerEth1Name'))]"                
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('BpsSystemControllerEth0Name'))]"
             ]
         },
 
