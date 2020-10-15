@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
 		"IxiaImagesResourceGroupName": {
@@ -12,10 +12,6 @@
 		},
         "MgmtSubnetName": {
 			"defaultValue": "Ixia_BPS_AZURE_VNET_MGMT_SUBNET",
-			"type": "String"
-		},
-        "CtrlSubnetName": {
-			"defaultValue": "Ixia_BPS_AZURE_VNET_CTRL_SUBNET",
 			"type": "String"
 		},
         "Test1SubnetName": {
@@ -88,8 +84,6 @@
         "VnetName": "[parameters('VnetName')]",
         "MgmtSubnetName": "[parameters('MgmtSubnetName')]",
 		"MgmtSubnetRef": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', variables('VnetName'),  variables('MgmtSubnetName'))]",
-        "CtrlSubnetName": "[parameters('CtrlSubnetName')]",
-        "CtrlSubnetRef": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', variables('VnetName'),  variables('CtrlSubnetName'))]",
         "Test1SubnetName": "[parameters('Test1SubnetName')]",
         "Test1SubnetRef": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', variables('VnetName'),  variables('Test1SubnetName'))]",
         "Test2SubnetName": "[parameters('Test2SubnetName')]",
@@ -122,9 +116,7 @@
 		"BpsVirtualBladeImageId": "[concat('/subscriptions/', variables('SubscriptionId'), '/resourceGroups/', variables('IxiaImagesResourceGroupName'), '/providers/Microsoft.Compute/images/', variables('BpsVirtualBladeImageName'))]",		
 		"BpsVirtualBladeCreateOption": "FromImage",		
 		"AdminUserName": "bpcloud",
-		"AdminPassword": "Ixia1234!",
-		"SshPublicKeyData": "ssh-rsa",
-		"SshKeyPath": "[concat('/home/',variables('AdminUserName'),'/.ssh/authorized_keys')]"
+		"AdminPassword": "Ixia1234!"
 	},
     "resources": [
         {
@@ -291,7 +283,7 @@
                                 "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('BpsVirtualBlade1Eth0PublicIpAddressName'))]"
                             },
                             "subnet": {
-                                "id": "[variables('CtrlSubnetRef')]"
+                                "id": "[variables('MgmtSubnetRef')]"
                             },
                             "primary": true,
                             "privateIPAddressVersion": "IPv4"
@@ -680,15 +672,7 @@
 					"adminPassword": "[variables('AdminPassword')]",
 					"linuxConfiguration": {
 						"disablePasswordAuthentication": "[variables('BpsVirtualBladeDisablePasswordAuthentication')]",
-						"provisionVMAgent": "[variables('BpsVirtualBladeProvisionVMAgent')]",
-						"ssh": {
-						  "publicKeys": [
-							{
-							  "path": "[variables('SshKeyPath')]",
-							  "keyData": "[variables('SshPublicKeyData')]"
-							}
-						  ]
-						}
+						"provisionVMAgent": "[variables('BpsVirtualBladeProvisionVMAgent')]"
 					}
 				},
                 "networkProfile": {

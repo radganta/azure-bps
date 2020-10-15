@@ -144,9 +144,7 @@
 		"BpsVirtualBladeImageId": "[concat('/subscriptions/', variables('SubscriptionId'), '/resourceGroups/', variables('IxiaImagesResourceGroupName'), '/providers/Microsoft.Compute/images/', variables('BpsVirtualBladeImageName'))]",		
 		"BpsVirtualBladeCreateOption": "FromImage",		
 		"AdminUserName": "bpcloud",
-		"AdminPassword": "Ixia1234!",
-		"SshPublicKeyData": "ssh-rsa",
-		"SshKeyPath": "[concat('/home/',variables('AdminUserName'),'/.ssh/authorized_keys')]"
+		"AdminPassword": "Ixia1234!"
 	},
     "resources": [
         {
@@ -205,7 +203,7 @@
                 "[resourceId('Microsoft.Network/virtualNetworks', variables('VnetName'))]"
             ]
         },
-        
+
         {
             "type": "Microsoft.Network/virtualNetworks/subnets",
             "name": "[concat(variables('VnetName'), '/', variables('Test1SubnetName'))]",
@@ -422,7 +420,7 @@
                 "[resourceId('Microsoft.Network/publicIPAddresses', variables('MgmtPublicIpAddressName'))]"
             ]
         },
-                   
+
         {
             "type": "Microsoft.Network/networkInterfaces",
             "name": "[variables('BpsVirtualBlade1Eth0Name')]",
@@ -864,15 +862,7 @@
 					"adminPassword": "[variables('AdminPassword')]",
 					"linuxConfiguration": {
 						"disablePasswordAuthentication": "[variables('BpsSystemControllerDisablePasswordAuthentication')]",
-						"provisionVMAgent": "[variables('BpsSystemControllerProvisionVMAgent')]",
-						"ssh": {
-						  "publicKeys": [
-							{
-							  "path": "[variables('SshKeyPath')]",
-							  "keyData": "[variables('SshPublicKeyData')]"
-							}
-						  ]
-						}
+						"provisionVMAgent": "[variables('BpsSystemControllerProvisionVMAgent')]"
 					}
                 },
                 "networkProfile": {
@@ -933,15 +923,7 @@
 					"adminPassword": "[variables('AdminPassword')]",
 					"linuxConfiguration": {
 						"disablePasswordAuthentication": "[variables('BpsVirtualBladeDisablePasswordAuthentication')]",
-						"provisionVMAgent": "[variables('BpsVirtualBladeProvisionVMAgent')]",
-						"ssh": {
-						  "publicKeys": [
-							{
-							  "path": "[variables('SshKeyPath')]",
-							  "keyData": "[variables('SshPublicKeyData')]"
-							}
-						  ]
-						}
+						"provisionVMAgent": "[variables('BpsVirtualBladeProvisionVMAgent')]"
 					}
 				},
                 "networkProfile": {
