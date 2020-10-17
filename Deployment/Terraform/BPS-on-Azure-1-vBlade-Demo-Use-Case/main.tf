@@ -4,7 +4,7 @@ provider "azurerm" {
 }
 
 locals {
-	uuid = "${substr(uuid(), 1, 6)}"
+	uuid = substr(uuid(), 1, 6)
 	SubscriptionId = var.AzureSubscriptionId
 	ResourceGroupName = var.AzureResourceGroupName
 	OptionalVMPrefix = var.OptionalVMPrefix
@@ -63,8 +63,6 @@ locals {
 	BpsVirtualBladeCreateOption = "FromImage"
 	AdminUserName = "bpcloud"
 	AdminPassword = "Ixia1234!"
-	SshPublicKeyData = "ssh-rsa"
-	SshKeyPath = "/home/${local.AdminUserName}/.ssh/authorized_keys"
 }
 
 resource "azurerm_resource_group" "example" {
@@ -562,10 +560,6 @@ resource "azurerm_virtual_machine" "BpsSystemController" {
 	}
 	os_profile_linux_config {
 		disable_password_authentication = local.BpsSystemControllerDisablePasswordAuthentication
-		ssh_keys {
-			path = local.SshKeyPath
-			key_data = local.SshPublicKeyData
-		}
 	}
 	network_interface_ids = [
 		azurerm_network_interface.BpsSystemControllerEth0.id
@@ -612,10 +606,6 @@ resource "azurerm_virtual_machine" "BpsVirtualBlade1" {
 	}
 	os_profile_linux_config {
 		disable_password_authentication = local.BpsVirtualBladeDisablePasswordAuthentication
-		ssh_keys {
-			path = local.SshKeyPath
-			key_data = local.SshPublicKeyData
-		}
 	}
 	primary_network_interface_id = azurerm_network_interface.BpsVirtualBlade1Eth0.id
 	network_interface_ids = [
