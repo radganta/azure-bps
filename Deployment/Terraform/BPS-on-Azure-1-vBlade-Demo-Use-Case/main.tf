@@ -42,7 +42,6 @@ locals {
 	BpsSystemControllerDisablePasswordAuthentication = "false"
 	BpsSystemControllerBootDiagnosticsEnabled = "true"
 	BpsSystemControllerVmSize = var.BpsSystemControllerVmSize
-	BpsSystemControllerVmSize_allowedValues = ["Standard_F4s", "Standard_F4s_v2"]
 	BpsSystemControllerDiskSizeGB = "20"
 	BpsVirtualBlade1Name = "${local.OptionalVMPrefix}-BPS-AZURE-VIRTUAL-BLADE1"
 	BpsVirtualBlade1DnsLabel = join("", [lower(replace(local.ResourceGroupName, "_", "-")), "-", "bps-vblade-1", "-", local.uuid])
@@ -51,7 +50,6 @@ locals {
 	BpsVirtualBladeDisablePasswordAuthentication = "false"
 	BpsVirtualBladeBootDiagnosticsEnabled = "true"
 	BpsVirtualBladeVmSize = var.BpsVirtualBladeVmSize
-	BpsVirtualBladeVmSize_allowedValues = ["Standard_F16s", "Standard_F8s", "Standard_F4s"]
 	BpsVirtualBladeDiskSizeGB = "14"
 	MgmtPublicIpAddressName = "${local.OptionalVMPrefix}_BPS_AZURE_MGMT_PUBLIC_IP"
 	BpsVirtualBlade1Eth0PublicIpAddressName = "${local.OptionalVMPrefix}_BPS_AZURE_BPS_VIRTUAL_BLADE1_ETH0_PUBLIC_IP"
