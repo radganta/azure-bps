@@ -2,19 +2,19 @@
 
 if [ -z $1 ]; then
     echo "Error: specify the destination resource group name"
-    echo "BreakingPoint_Prepare_VMImages_Azure_CLI_Script.bash <destination-resource-group-name> <destination-storage-account-name>"
+    echo "BreakingPoint_Azure.bash <destination-resource-group-name> <destination-storage-account-name>"
     echo "<destination-resource-group-name> must be preexistent and will store the virtual machine images. Rule is to be alphanumeric, underscore, parentheses, hyphen, period (except at end)"
     echo "<destination-storage-account-name> length 3 to 24 chars, numbers and lower-case letters only."
-    echo "ex: ./BreakingPoint_Prepare_VMImages_Azure_CLI_Script.bash Ixia_Images_RG bpsvhds910u2"
+    echo "ex: ./BreakingPoint_Prepare_VMImages_Azure_CLI_Script.bash Ixia_Images_RG bpsvhds910u3"
     exit 1
 fi
 
 if [ -z $2 ]; then
     echo "Error: specify the destination storage account name"
-    echo "BreakingPoint_Prepare_VMImages_Azure_CLI_Script.bash <destination-resource-group-name> <destination-storage-account-name>"
+    echo "BreakingPoint_Azure.bash <destination-resource-group-name> <destination-storage-account-name>"
     echo "<destination-resource-group-name> must be preexistent and will store the virtual machine images"
     echo "<destination-storage-account-name> length 3 to 24 alphanumeric lowercase only and unique across azure universe. Needed for storing the vhd files."
-    echo "./BreakingPoint_Prepare_VMImages_Azure_CLI_Script.bash Ixia_Images_RG bpsvhds910u2"
+    echo "ex: ./BreakingPoint_Prepare_VMImages_Azure_CLI_Script.bash Ixia_Images_RG bpsvhds910u3"
     exit 1
 fi
 
@@ -32,17 +32,17 @@ fi
 #source
 source_bps_virtual_controller_blob=Ixia_BreakingPoint_Virtual_Controller_9.10.110_KVM.vhd
 source_bps_virtual_blade_blob=Ixia_BreakingPoint_Virtual_Blade_9.10.110_KVM.vhd
-source_bps_virtual_controller_account_name=bpsstore91011040135644
+source_bps_virtual_controller_account_name=bpsve910u3
 source_bps_virtual_controller_container=bps-container
 source_bps_virtual_blade_container=bps-container 
-source_bps_virtual_controller_account_key=uwmrGXWgDHLEltTd60UeQEjrBVE3uuLVnEuiHRcO7en7lUgmzMCo2qm09/tlZVK8395kQ4KGIks5IrEVucXPEw==
+source_bps_virtual_controller_account_key=wsOuiQxkUJvPJMIyMqRAwhPDypSJYIx8MUyAjE+5LMqbXWWL++Dk5+85eq3wusliIFLJugK7xX+PTn+kbfmFwA==
 
 #destination
 destination_resource_group_name=$1
 destination_account_name=$2
-destination_container_name=bpsvevhd910u2
-destination_bps_virtual_controller_blob=Ixia_BreakingPoint_Virtual_Controller_9.10.u2.vhd
-destination_bps_virtual_blade_blob=Ixia_BreakingPoint_Virtual_Blade_9.10.u2.vhd
+destination_container_name=bpsvevhd910u3
+destination_bps_virtual_controller_blob=Ixia_BreakingPoint_Virtual_Controller_9.10.u3.vhd
+destination_bps_virtual_blade_blob=Ixia_BreakingPoint_Virtual_Blade_9.10.u3.vhd
 destination_bps_virtual_controller_vmImage=$(basename $destination_bps_virtual_controller_blob .vhd)
 destination_bps_bps_virtual_blade_vmImage=$(basename $destination_bps_virtual_blade_blob .vhd)
 
@@ -59,7 +59,7 @@ if [ "$create_new_dest_acc" == "" ];then
         az storage account create -n $destination_account_name -g $destination_resource_group_name
     else
         echo "Unable to create storage account $destination_account_name under resource group $destination_resource_group_name"
-        echo "The name already exists somewhere or is not formated correctly <length 3 to 24 chars, numbers and lower-case letters only>"
+        echo "The name already exists somewhere or is not formatted correctly <length 3 to 24 chars, numbers and lower-case letters only>"
         exit 1
     fi
 fi
