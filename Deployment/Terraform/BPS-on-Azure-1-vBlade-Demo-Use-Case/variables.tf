@@ -29,7 +29,7 @@ variable "MgmtSecurityRuleSourceIpPrefix" {
 
 variable "BpsSystemControllerImageName" {
 	type = string
-	default = "Ixia_BreakingPoint_Virtual_Controller_9.10.u2"
+	default = "Ixia_BreakingPoint_Virtual_Controller_9.10.u3"
 }
 
 variable "BpsSystemControllerVmSize" {
@@ -43,7 +43,7 @@ variable "BpsSystemControllerVmSize" {
 
 variable "BpsVirtualBladeImageName" {
 	type = string
-	default = "Ixia_BreakingPoint_Virtual_Blade_9.10.u2"
+	default = "Ixia_BreakingPoint_Virtual_Blade_9.10.u3"
 }
 
 variable "BpsVirtualBladeVmSize" {
